@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chandu Shree — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rose:#C8514A;--rose-l:#E07B72;--rose-d:#8C342E;
+  --blush:#F2D9D5;--petal:#FDF0EE;
+  --mauve:#7D5A6B;--mauve-l:#B08498;
+  --gold:#C9943A;--gold-l:#E8C07A;--gold-pale:#F7EDD8;
+  --cream:#F8F3EC;--warm:#FDFAF6;
+  --charcoal:#221A18;--ink:#150E0C;--muted:#7A6560;
+  --border:rgba(34,26,24,0.11);
+  --kk-bg:#1C1008;--kk-gold:#D4A843;--kk-rose:#C8514A;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Jost',sans-serif;background:var(--warm);color:var(--charcoal);overflow-x:hidden;cursor:none;}
+
+/* CURSOR — rose ring, gold dot */
+#cur{width:8px;height:8px;background:var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .12s ease,background .2s;}
+#cur-r{width:32px;height:32px;border:1.5px solid var(--rose);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .3s ease;opacity:.5;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;width:100%;z-index:200;padding:1.1rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(253,250,246,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:box-shadow .3s;}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:.01em;}
+.nav-logo span{color:var(--rose);font-style:italic;}
+.nav-links{display:flex;gap:2.2rem;list-style:none;}
+.nav-links a{font-size:.75rem;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.11em;text-transform:uppercase;transition:color .2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:var(--rose);transition:width .3s;}
+.nav-links a:hover{color:var(--rose);}
+.nav-links a:hover::after{width:100%;}
+.nav-toggle{display:none;background:none;border:none;cursor:none;flex-direction:column;gap:5px;}
+.nav-toggle span{display:block;width:22px;height:1.5px;background:var(--charcoal);transition:all .3s;}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 3rem 5rem;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:
+  radial-gradient(ellipse 55% 60% at 95% 20%, #F2D9D5 0%, transparent 55%),
+  radial-gradient(ellipse 40% 50% at 5% 90%, #F7EDD8 0%, transparent 50%),
+  radial-gradient(ellipse 60% 40% at 50% 110%, #EDD5D0 0%, transparent 60%),
+  var(--warm);}
+.hero-big-text{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);
+  font-family:'Playfair Display',serif;font-size:clamp(8rem,18vw,18rem);
+  font-weight:900;font-style:italic;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(200,81,74,.12);
+  white-space:nowrap;pointer-events:none;z-index:0;
+  letter-spacing:-.03em;line-height:1;
+  user-select:none;
+}
+.hero-content{position:relative;z-index:2;max-width:800px;}
+.hero-eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem;}
+.hero-eyebrow span{font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--rose);}
+.hero-eyebrow::before{content:'';display:block;width:40px;height:1.5px;background:var(--rose);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,7.5vw,7rem);font-weight:900;line-height:.95;color:var(--ink);letter-spacing:-.03em;margin-bottom:1.6rem;}
+h1 em{font-style:italic;color:var(--rose);display:block;}
+h1 .sub-name{font-size:clamp(1.4rem,3vw,2.8rem);font-weight:400;font-style:italic;color:var(--mauve);display:block;letter-spacing:.01em;margin-top:.35rem;}
+.hero-desc{font-size:clamp(.95rem,1.8vw,1.1rem);color:var(--muted);font-weight:300;max-width:480px;line-height:1.9;margin-bottom:3rem;}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;}
+.btn-p{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 2rem;background:var(--rose);color:#fff;font-family:'Jost',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:none;cursor:none;transition:background .25s,transform .2s;}
+.btn-p:hover{background:var(--rose-d);transform:translateY(-2px);}
+.btn-g{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 2rem;background:transparent;color:var(--charcoal);font-family:'Jost',sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:1.5px solid var(--border);cursor:none;transition:border-color .25s,color .25s;}
+.btn-g:hover{border-color:var(--rose);color:var(--rose);}
+.hero-scroll{position:absolute;right:3rem;bottom:3rem;z-index:2;display:flex;flex-direction:column;align-items:center;gap:.5rem;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);}
+.scroll-line{width:1px;height:56px;background:linear-gradient(to bottom,var(--rose),transparent);animation:sp 2s ease infinite;}
+@keyframes sp{0%,100%{opacity:.35}50%{opacity:1}}
+
+/* ── SECTION SHARED ── */
+section{padding:6rem 3rem;}
+.sec-hdr{display:flex;align-items:center;gap:1.2rem;margin-bottom:3.5rem;}
+.sec-num{font-family:'Playfair Display',serif;font-size:.82rem;color:var(--rose);letter-spacing:.1em;font-style:italic;}
+.sec-line{flex:1;height:1px;background:var(--border);}
+h2{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:700;color:var(--ink);line-height:1.1;letter-spacing:-.02em;}
+h2 em{font-style:italic;color:var(--rose);}
+
+/* ── CAROUSEL SHARED ── */
+.c-outer{overflow:hidden;user-select:none;}
+.c-track{display:flex;transition:transform .6s cubic-bezier(.22,.68,0,1.2);will-change:transform;cursor:grab;}
+.c-track:active{cursor:grabbing;}
+.c-nav{display:flex;align-items:center;justify-content:space-between;margin-top:2.25rem;}
+.c-dots{display:flex;gap:.5rem;align-items:center;}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--border);border:1px solid rgba(34,26,24,.2);transition:all .35s;cursor:none;}
+.dot.on{background:var(--rose);width:24px;border-radius:3px;}
+.c-arrows{display:flex;gap:.65rem;}
+.arr{width:44px;height:44px;border:1.5px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:none;transition:all .25s;color:var(--charcoal);font-size:1rem;line-height:1;font-family:serif;}
+.arr:hover{border-color:var(--rose);color:var(--rose);background:rgba(200,81,74,.05);}
+.arr:disabled{opacity:.2;pointer-events:none;}
+
+/* ── ABOUT ── */
+#about{background:var(--cream);}
+.ab-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:5rem;align-items:center;}
+.ab-port{position:relative;aspect-ratio:3/4;overflow:hidden;}
+.ab-ph{width:100%;height:100%;background:linear-gradient(160deg,var(--blush) 0%,#E8D0C8 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;font-family:'Playfair Display',serif;color:var(--mauve);}
+.ab-ico{width:80px;height:80px;border-radius:50%;background:rgba(200,81,74,.1);display:flex;align-items:center;justify-content:center;}
+.ab-ico svg{width:34px;height:34px;stroke:var(--rose);fill:none;stroke-width:1.5;}
+.ab-lbl{font-size:.9rem;letter-spacing:.04em;font-style:italic;}
+.ab-frame{position:absolute;top:1rem;left:1rem;right:-1rem;bottom:-1rem;border:2px solid var(--gold-l);z-index:-1;}
+.ab-corner{position:absolute;width:20px;height:20px;border-color:var(--rose);}
+.ab-corner.tl{top:-.5rem;left:-.5rem;border-top:2px solid;border-left:2px solid;}
+.ab-corner.br{bottom:-.5rem;right:.5rem;border-bottom:2px solid;border-right:2px solid;}
+.ab-text .lead{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:400;font-style:italic;color:var(--rose-d);line-height:1.4;margin-bottom:1.5rem;}
+.ab-text p{font-size:.98rem;line-height:1.95;color:var(--muted);margin-bottom:1.3rem;font-weight:300;}
+.ab-text p strong{color:var(--charcoal);font-weight:600;}
+.sk-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:2rem;}
+.sk{padding:.4rem 1rem;border:1.5px solid var(--border);font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);transition:all .22s;cursor:none;}
+.sk:hover{border-color:var(--rose);color:var(--rose);background:rgba(200,81,74,.04);}
+
+/* ── DOMAINS CAROUSEL ── */
+#fields{background:var(--warm);}
+.d-slide{flex:0 0 calc(33.333% - 14px);margin-right:20px;padding:2.5rem;border:1.5px solid var(--border);position:relative;overflow:hidden;transition:border-color .3s,background .3s;cursor:none;}
+.d-slide::after{content:'';position:absolute;bottom:0;left:0;width:0;height:3px;background:linear-gradient(to right,var(--rose),var(--gold));transition:width .45s ease;}
+.d-slide:hover::after{width:100%;}
+.d-slide:hover{border-color:rgba(200,81,74,.25);background:var(--cream);}
+.d-n{position:absolute;top:1.5rem;right:1.75rem;font-family:'Playfair Display',serif;font-size:4rem;font-weight:900;font-style:italic;color:rgba(34,26,24,.04);line-height:1;}
+.d-ico{font-size:1.6rem;margin-bottom:1.25rem;display:block;}
+.d-slide h3{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:var(--ink);margin-bottom:.6rem;}
+.d-slide p{font-size:.85rem;line-height:1.82;color:var(--muted);font-weight:300;}
+
+/* ── PROJECTS CAROUSEL ── */
+#work{background:var(--charcoal);}
+#work h2{color:var(--petal);}
+#work h2 em{color:var(--rose-l);}
+#work .sec-num{color:var(--rose-l);}
+#work .sec-line{background:rgba(255,255,255,.1);}
+#work .c-nav{border-top:1px solid rgba(255,255,255,.07);padding-top:1.5rem;}
+#work .dot{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.1);}
+#work .dot.on{background:var(--rose-l);}
+#work .arr{border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.5);}
+#work .arr:hover{border-color:var(--rose-l);color:var(--rose-l);background:rgba(224,123,114,.08);}
+.p-slide{flex:0 0 calc(50% - 12px);margin-right:22px;padding:2.5rem;border:1px solid rgba(255,255,255,.07);cursor:none;transition:border-color .3s,background .3s;position:relative;overflow:hidden;}
+.p-slide::before{content:'';position:absolute;top:0;left:0;width:0;height:100%;background:rgba(200,81,74,.04);transition:width .4s ease;}
+.p-slide:hover::before{width:100%;}
+.p-slide:hover{border-color:rgba(224,123,114,.3);}
+.p-yr{font-family:'Playfair Display',serif;font-size:.82rem;font-style:italic;color:rgba(255,255,255,.28);letter-spacing:.04em;margin-bottom:.75rem;}
+.p-title{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:700;color:var(--petal);line-height:1.15;margin-bottom:.6rem;}
+.p-desc{font-size:.84rem;color:rgba(255,255,255,.36);font-weight:300;line-height:1.8;margin-bottom:1.25rem;}
+.p-tags{display:flex;gap:.45rem;flex-wrap:wrap;}
+.ptag{padding:.28rem .7rem;border:1px solid rgba(255,255,255,.1);font-size:.68rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.3);}
+
+/* ── KAHAANI KARAMEL ── */
+#kahaani{background:var(--kk-bg);position:relative;overflow:hidden;}
+.kk-bg-deco{position:absolute;inset:0;pointer-events:none;}
+.kk-bg-deco::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;border:1px solid rgba(212,168,67,.06);top:-200px;right:-200px;}
+.kk-bg-deco::after{content:'';position:absolute;width:400px;height:400px;border-radius:50%;border:1px solid rgba(200,81,74,.07);bottom:-100px;left:-100px;}
+.kk-swirl{position:absolute;font-family:'Playfair Display',serif;font-size:clamp(10rem,22vw,22rem);font-weight:900;font-style:italic;color:transparent;-webkit-text-stroke:1px rgba(212,168,67,.06);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;letter-spacing:-.04em;line-height:1;z-index:0;}
+.kk-content{position:relative;z-index:1;}
+#kahaani .sec-num{color:var(--kk-gold);}
+#kahaani .sec-line{background:rgba(212,168,67,.18);}
+#kahaani h2{color:#FAF0E0;font-size:clamp(2.5rem,5vw,4rem);}
+#kahaani h2 em{color:var(--kk-gold);}
+.kk-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-top:1rem;}
+.kk-logo-box{aspect-ratio:1;border:1.5px dashed rgba(212,168,67,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.25rem;padding:2.5rem;position:relative;}
+.kk-logo-box::before{content:'';position:absolute;inset:.5rem;border:1px solid rgba(200,81,74,.12);}
+.kk-logo-inner{text-align:center;}
+.kk-logo-icon{width:80px;height:80px;border-radius:50%;background:rgba(212,168,67,.08);border:1.5px dashed rgba(212,168,67,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;}
+.kk-logo-icon svg{width:36px;height:36px;stroke:var(--kk-gold);fill:none;stroke-width:1.2;opacity:.6;}
+.kk-logo-text{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;font-style:italic;color:var(--kk-gold);opacity:.5;letter-spacing:.04em;display:block;}
+.kk-logo-sub{font-size:.7rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:rgba(212,168,67,.35);margin-top:.5rem;display:block;}
+.kk-right{display:flex;flex-direction:column;gap:2rem;}
+.kk-tagline{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,2.5vw,2rem);font-weight:400;font-style:italic;color:#FAF0E0;line-height:1.4;}
+.kk-tagline span{color:var(--kk-gold);}
+.kk-desc-box{padding:2rem;border:1px solid rgba(212,168,67,.15);background:rgba(255,255,255,.02);}
+.kk-desc-label{font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(212,168,67,.5);margin-bottom:.75rem;}
+.kk-desc-text{font-size:.92rem;color:rgba(255,255,255,.5);font-weight:300;line-height:1.85;font-style:italic;}
+.kk-desc-text em{color:rgba(212,168,67,.7);font-style:normal;font-weight:500;}
+.kk-pills{display:flex;flex-wrap:wrap;gap:.5rem;}
+.kk-pill{padding:.38rem .9rem;border:1px solid rgba(212,168,67,.2);font-size:.7rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(212,168,67,.55);transition:all .2s;cursor:none;}
+.kk-pill:hover{border-color:rgba(212,168,67,.5);color:rgba(212,168,67,.85);}
+.kk-launch{display:inline-flex;align-items:center;gap:.75rem;padding:1rem 2rem;background:transparent;border:1.5px solid var(--kk-gold);color:var(--kk-gold);font-family:'Jost',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;cursor:none;transition:all .3s;margin-top:.5rem;}
+.kk-launch:hover{background:var(--kk-gold);color:var(--kk-bg);}
+.kk-status{display:inline-flex;align-items:center;gap:.6rem;font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(212,168,67,.5);}
+.kk-pdot{width:6px;height:6px;border-radius:50%;background:var(--kk-gold);animation:pu 2s ease infinite;opacity:.6;}
+@keyframes pu{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.4)}}
+
+/* ── CONTACT ── */
+#contact{background:var(--cream);}
+.co-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:5rem;align-items:start;}
+.co-info .co-head{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--ink);line-height:1.15;margin-bottom:1.5rem;}
+.co-info .co-head em{font-style:italic;color:var(--rose);}
+.co-info p{font-size:.93rem;line-height:1.9;color:var(--muted);font-weight:300;margin-bottom:2rem;}
+.cls{display:flex;flex-direction:column;gap:.75rem;}
+.cl{display:flex;align-items:center;gap:.9rem;font-size:.86rem;color:var(--muted);text-decoration:none;transition:color .2s;cursor:none;}
+.cl:hover{color:var(--rose);}
+.cl-ico{width:36px;height:36px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:border-color .2s,background .2s;}
+.cl:hover .cl-ico{border-color:var(--rose);background:rgba(200,81,74,.05);}
+.cform{display:flex;flex-direction:column;gap:1.1rem;}
+.fg{display:flex;flex-direction:column;gap:.4rem;}
+.fg label{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.fg input,.fg textarea{padding:.85rem 1rem;background:var(--warm);border:1.5px solid var(--border);color:var(--charcoal);font-family:'Jost',sans-serif;font-size:.9rem;font-weight:300;outline:none;transition:border-color .2s;resize:none;}
+.fg input:focus,.fg textarea:focus{border-color:var(--rose);}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.fsub{padding:.95rem 2.5rem;background:var(--rose);color:#fff;border:none;font-family:'Jost',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:none;transition:background .25s;align-self:flex-start;}
+.fsub:hover{background:var(--rose-d);}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);padding:2.5rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.f-logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--petal);text-decoration:none;letter-spacing:.01em;}
+.f-logo span{color:var(--rose-l);font-style:italic;}
+footer p{font-size:.74rem;color:rgba(255,255,255,.25);letter-spacing:.04em;}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .75s ease,transform .75s ease;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+.r1{transition-delay:.1s}.r2{transition-delay:.2s}.r3{transition-delay:.3s}.r4{transition-delay:.45s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .d-slide{flex:0 0 calc(50% - 12px);}
+  .p-slide{flex:0 0 100%;margin-right:0;}
+  .kk-grid{grid-template-columns:1fr;gap:3rem;}
+}
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{display:none;flex-direction:column;position:fixed;inset:0;background:var(--warm);padding:5rem 2.5rem;gap:1.75rem;z-index:199;}
+  .nav-links.open{display:flex;}
+  .nav-links a{font-size:1.4rem;}
+  .nav-toggle{display:flex;}
+  section{padding:4rem 1.5rem;}
+  #hero{padding:0 1.5rem 4rem;}
+  .ab-grid,.co-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .ab-port{max-height:320px;}
+  .d-slide{flex:0 0 85%;}
+  footer{padding:1.75rem 1.5rem;}
+  .hero-big-text{font-size:clamp(5rem,20vw,12rem);}
+  body{cursor:auto;}
+  #cur,#cur-r{display:none;}
+}
+@media(max-width:480px){
+  .frow{grid-template-columns:1fr;}
+  h1{font-size:2.6rem;}
+}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="cur-r"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">Chandu <span>Shree</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#fields">What I Do</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#kahaani">Kahaani Karamel</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-big-text">Chandu</div>
+  <div class="hero-content">
+    <div class="hero-eyebrow reveal"><span>Creator · Builder · Storyteller</span></div>
+    <h1 class="reveal r1">
+      She builds.<br>
+      <em>She imagines.</em>
+      <span class="sub-name">Chandu Shree.</span>
+    </h1>
+    <p class="hero-desc reveal r2">
+      Engineer. Writer. Artist. Researcher. Founder-in-the-making. A woman expanding her edges across every field she touches — and just getting started.
+    </p>
+    <div class="hero-ctas reveal r3">
+      <a href="#work" class="btn-p">See My Work ↓</a>
+      <a href="#kahaani" class="btn-g">Kahaani Karamel ✦</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div>Scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-hdr reveal"><span class="sec-num">01 —</span><div class="sec-line"></div><h2>About <em>Me</em></h2></div>
+  <div class="ab-grid">
+    <div class="ab-port reveal">
+      <div class="ab-ph">
+        <div class="ab-ico">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <span class="ab-lbl">Your Photo Here</span>
+      </div>
+      <div class="ab-frame"></div>
+      <div class="ab-corner tl"></div>
+      <div class="ab-corner br"></div>
+    </div>
+    <div class="ab-text">
+      <p class="lead reveal">"I don't stay in one lane.<br>I build the road."</p>
+      <p class="reveal r1">I'm <strong>Chandu Shree</strong> — a multidisciplinary creator who refuses to be boxed in. I write code and I write stories. I research data and I make art. I'm building a business while building myself.</p>
+      <p class="reveal r2">My work is fuelled by a simple belief: that the most interesting things happen at the <strong>intersection of disciplines</strong>. Engineering informs my aesthetics. Art sharpens my logic. Writing gives everything else a soul.</p>
+      <p class="reveal r3">Right now I'm channeling everything into <strong>Kahaani Karamel</strong> — a venture that's deeply personal and entirely mine. More on that below.</p>
+      <div class="sk-row reveal r4">
+        <span class="sk">Engineering</span>
+        <span class="sk">Writing</span>
+        <span class="sk">Data & AI</span>
+        <span class="sk">Illustration</span>
+        <span class="sk">Research</span>
+        <span class="sk">Brand Building</span>
+        <span class="sk">Storytelling</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOMAINS CAROUSEL -->
+<section id="fields">
+  <div class="sec-hdr reveal"><span class="sec-num">02 —</span><div class="sec-line"></div><h2>What I <em>Do</em></h2></div>
+  <div class="reveal">
+    <div class="c-outer" id="dOuter">
+      <div class="c-track" id="dTrack">
+        <div class="d-slide">
+          <span class="d-n">01</span>
+          <span class="d-ico">⚙️</span>
+          <h3>Engineering</h3>
+          <p>I build things that work — cleanly, reliably, beautifully. Full-stack development with a deep love for systems that feel inevitable once you see them.</p>
+        </div>
+        <div class="d-slide">
+          <span class="d-n">02</span>
+          <span class="d-ico">✍️</span>
+          <h3>Writing & Content</h3>
+          <p>Words as architecture. I craft long-form narratives, sharp copy, and essays that make people stop and feel something. Language is a craft I take seriously.</p>
+        </div>
+        <div class="d-slide">
+          <span class="d-n">03</span>
+          <span class="d-ico">🔬</span>
+          <h3>Data & AI Research</h3>
+          <p>I find meaning in noise. From ML experiments to data stories — I translate the complex into the human, and the human into something actionable.</p>
+        </div>
+        <div class="d-slide">
+          <span class="d-n">04</span>
+          <span class="d-ico">🖼️</span>
+          <h3>Art & Illustration</h3>
+          <p>The practice that keeps me honest. I make art that explores texture, emotion, and form — the part of me that cannot be optimised or automated.</p>
+        </div>
+        <div class="d-slide">
+          <span class="d-n">05</span>
+          <span class="d-ico">🚀</span>
+          <h3>Venture Building</h3>
+          <p>Kahaani Karamel is my most ambitious project yet — a business that is an expression of everything I am. Still forming. Already fierce.</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-nav">
+      <div class="c-dots" id="dDots"></div>
+      <div class="c-arrows">
+        <button class="arr" id="dPrev">&#8592;</button>
+        <button class="arr" id="dNext">&#8594;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS CAROUSEL -->
+<section id="work">
+  <div class="sec-hdr reveal"><span class="sec-num">03 —</span><div class="sec-line"></div><h2>Selected <em>Work</em></h2></div>
+  <div class="reveal">
+    <div class="c-outer" id="pOuter">
+      <div class="c-track" id="pTrack">
+        <div class="p-slide">
+          <div class="p-yr">2025</div>
+          <div class="p-title">Meridian — ML Research Tool</div>
+          <p class="p-desc">Interactive data exploration platform for research teams. Custom visualization layer built with React and Python.</p>
+          <div class="p-tags"><span class="ptag">AI / Data</span><span class="ptag">Engineering</span><span class="ptag">Research</span></div>
+        </div>
+        <div class="p-slide">
+          <div class="p-yr">2024</div>
+          <div class="p-title">The Quiet Atlas</div>
+          <p class="p-desc">Long-form illustrated essay on urban solitude — 12,000 words and 30 original illustrations, published independently.</p>
+          <div class="p-tags"><span class="ptag">Writing</span><span class="ptag">Illustration</span></div>
+        </div>
+        <div class="p-slide">
+          <div class="p-yr">2024</div>
+          <div class="p-title">Forma — Art Series</div>
+          <p class="p-desc">20-piece illustration series exploring material, form, and texture. Exhibited digitally and in a limited print run.</p>
+          <div class="p-tags"><span class="ptag">Art</span><span class="ptag">Illustration</span></div>
+        </div>
+        <div class="p-slide">
+          <div class="p-yr">2023</div>
+          <div class="p-title">Rootwork — Brand Story</div>
+          <p class="p-desc">Full brand identity and content strategy for an urban farm cooperative. Voice, collateral, and editorial calendar.</p>
+          <div class="p-tags"><span class="ptag">Brand</span><span class="ptag">Writing</span><span class="ptag">Strategy</span></div>
+        </div>
+        <div class="p-slide">
+          <div class="p-yr">2023</div>
+          <div class="p-title">Signal — Research Publication</div>
+          <p class="p-desc">Co-authored research paper on human-AI interaction patterns, presented at a national symposium.</p>
+          <div class="p-tags"><span class="ptag">Research</span><span class="ptag">AI</span><span class="ptag">Writing</span></div>
+        </div>
+        <div class="p-slide">
+          <div class="p-yr">2022</div>
+          <div class="p-title">Cipher — Privacy Dashboard</div>
+          <p class="p-desc">UX audit and rebuild of a B2B privacy platform. Reduced onboarding friction by 40% through improved interaction flow.</p>
+          <div class="p-tags"><span class="ptag">Engineering</span><span class="ptag">Research</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="c-nav">
+      <div class="c-dots" id="pDots"></div>
+      <div class="c-arrows">
+        <button class="arr" id="pPrev">&#8592;</button>
+        <button class="arr" id="pNext">&#8594;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KAHAANI KARAMEL -->
+<section id="kahaani">
+  <div class="kk-bg-deco"></div>
+  <div class="kk-swirl">Kahaani</div>
+  <div class="kk-content">
+    <div class="sec-hdr reveal"><span class="sec-num">04 —</span><div class="sec-line"></div><h2>Kahaani <em>Karamel</em></h2></div>
+    <div class="kk-grid">
+      <!-- LOGO PLACEHOLDER -->
+      <div class="reveal">
+        <div class="kk-logo-box">
+          <div class="kk-logo-inner">
+            <div class="kk-logo-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2C6 2 2 6 2 12s4 10 10 10 10-4 10-10S18 2 12 2z"/>
+                <path d="M8 12s1.5-3 4-3 4 3 4 3-1.5 3-4 3-4-3-4-3z"/>
+              </svg>
+            </div>
+            <span class="kk-logo-text">Kahaani Karamel</span>
+            <span class="kk-logo-sub">Logo Placeholder</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT CONTENT -->
+      <div class="kk-right">
+        <div class="kk-status reveal"><div class="kk-pdot"></div>Building in progress</div>
+
+        <p class="kk-tagline reveal r1">
+          A story <span>sweet enough</span><br>to remember.
+        </p>
+
+        <div class="kk-desc-box reveal r2">
+          <div class="kk-desc-label">About the venture</div>
+          <p class="kk-desc-text">
+            Kahaani Karamel is a brand being born from <em>passion, taste, and storytelling</em>. Every great brand carries a narrative — ours is being written with intention, warmth, and a touch of something golden. The details are still being crafted, but the soul of it is already clear: <em>an experience that lingers</em>, like the best kind of caramel.
+          </p>
+        </div>
+
+        <div class="kk-pills reveal r3">
+          <span class="kk-pill">Food & Lifestyle</span>
+          <span class="kk-pill">Brand Experience</span>
+          <span class="kk-pill">Storytelling</span>
+          <span class="kk-pill">Coming Soon</span>
+        </div>
+
+        <a href="#contact" class="kk-launch reveal r4">Stay in the Loop →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-hdr reveal"><span class="sec-num">05 —</span><div class="sec-line"></div><h2>Get In <em>Touch</em></h2></div>
+  <div class="co-grid">
+    <div class="co-info">
+      <h3 class="co-head reveal">Let's make<br>something <em>together</em></h3>
+      <p class="reveal r1">Whether you have a project in mind, want to collaborate, or just want to say hello — I'd love to hear from you.</p>
+      <div class="cls reveal r2">
+        <a href="mailto:hello@chandushree.com" class="cl"><div class="cl-ico">✉</div>hello@chandushree.com</a>
+        <a href="#" class="cl"><div class="cl-ico">in</div>linkedin.com/in/chandushree</a>
+        <a href="#" class="cl"><div class="cl-ico">𝕏</div>@chandushree</a>
+        <a href="#" class="cl"><div class="cl-ico">✦</div>Kahaani Karamel</a>
+      </div>
+    </div>
+    <form class="cform reveal r2" onsubmit="handleForm(event)">
+      <div class="frow">
+        <div class="fg"><label>Name</label><input type="text" placeholder="Your name" required></div>
+        <div class="fg"><label>Email</label><input type="email" placeholder="your@email.com" required></div>
+      </div>
+      <div class="fg"><label>Subject</label><input type="text" placeholder="What's this about?"></div>
+      <div class="fg"><label>Message</label><textarea rows="5" placeholder="Tell me about your project, idea, or just say hello..."></textarea></div>
+      <button type="submit" class="fsub" id="submitBtn">Send Message →</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#hero" class="f-logo">Chandu <span>Shree</span></a>
+  <p>© 2025 Chandu Shree. All rights reserved.</p>
+  <p>Built with intention. Expanding always.</p>
+</footer>
+
+<script>
+const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function tick(){rx+=(mx-rx)*.16;ry+=(my-ry)*.16;if(cur)cur.style.cssText=`left:${mx}px;top:${my}px;`;if(curR)curR.style.cssText=`left:${rx}px;top:${ry}px;`;requestAnimationFrame(tick);})();
+document.querySelectorAll('a,button,.d-slide,.p-slide,.sk,.kk-pill,.kk-launch').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{if(cur){cur.style.transform='translate(-50%,-50%) scale(2.8)';cur.style.background='var(--rose)';}if(curR)curR.style.opacity='.15';});
+  el.addEventListener('mouseleave',()=>{if(cur){cur.style.transform='translate(-50%,-50%) scale(1)';cur.style.background='var(--gold)';}if(curR)curR.style.opacity='.5';});
+});
+
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+const tog=document.getElementById('navToggle'),nl=document.getElementById('navLinks');
+tog.addEventListener('click',()=>{
+  nl.classList.toggle('open');
+  const s=tog.querySelectorAll('span');
+  if(nl.classList.contains('open')){s[0].style.transform='translateY(6.5px) rotate(45deg)';s[1].style.opacity='0';s[2].style.transform='translateY(-6.5px) rotate(-45deg)';}
+  else{s[0].style.transform='';s[1].style.opacity='';s[2].style.transform='';}
+});
+nl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nl.classList.remove('open');tog.querySelectorAll('span').forEach(s=>{s.style.transform='';s.style.opacity='';});}));
+window.addEventListener('scroll',()=>{document.getElementById('nav').style.boxShadow=scrollY>40?'0 2px 30px rgba(0,0,0,.07)':'';});
+
+function carousel(trackId,outerEl,prevId,nextId,dotsId,pvFn){
+  const track=document.getElementById(trackId);
+  const slides=Array.from(track.children);
+  const dotsEl=document.getElementById(dotsId);
+  const prevBtn=document.getElementById(prevId);
+  const nextBtn=document.getElementById(nextId);
+  let page=0,sx=0,dx=0,drag=false;
+  function pages(){return Math.ceil(slides.length/pvFn());}
+  function buildDots(){
+    dotsEl.innerHTML='';
+    for(let i=0;i<pages();i++){
+      const d=document.createElement('div');
+      d.className='dot'+(i===0?' on':'');
+      d.addEventListener('click',()=>go(i));
+      dotsEl.appendChild(d);
+    }
+  }
+  function go(p){
+    const n=pages();
+    page=Math.max(0,Math.min(p,n-1));
+    const sw=slides[0].getBoundingClientRect().width+parseFloat(getComputedStyle(slides[0]).marginRight||0);
+    track.style.transform=`translateX(-${page*pvFn()*sw}px)`;
+    dotsEl.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===page));
+    prevBtn.disabled=page===0;
+    nextBtn.disabled=page>=pages()-1;
+  }
+  prevBtn.addEventListener('click',()=>go(page-1));
+  nextBtn.addEventListener('click',()=>go(page+1));
+  outerEl.addEventListener('mousedown',e=>{sx=e.clientX;drag=true;dx=0;});
+  window.addEventListener('mousemove',e=>{if(!drag)return;dx=e.clientX-sx;});
+  window.addEventListener('mouseup',()=>{if(!drag)return;drag=false;if(dx<-50)go(page+1);else if(dx>50)go(page-1);dx=0;});
+  outerEl.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;drag=true;dx=0;},{passive:true});
+  outerEl.addEventListener('touchmove',e=>{if(!drag)return;dx=e.touches[0].clientX-sx;},{passive:true});
+  outerEl.addEventListener('touchend',()=>{if(!drag)return;drag=false;if(dx<-50)go(page+1);else if(dx>50)go(page-1);dx=0;});
+  buildDots();go(0);
+  window.addEventListener('resize',()=>{buildDots();go(0);});
+}
+
+carousel('dTrack',document.getElementById('dOuter'),'dPrev','dNext','dDots',()=>window.innerWidth>=1024?3:window.innerWidth>=600?2:1);
+carousel('pTrack',document.getElementById('pOuter'),'pPrev','pNext','pDots',()=>window.innerWidth>=900?2:1);
+
+function handleForm(e){
+  e.preventDefault();
+  const btn=document.getElementById('submitBtn');
+  btn.textContent='Sending...';btn.style.background='#888';
+  setTimeout(()=>{btn.textContent='Sent ✓';btn.style.background='var(--forest, #4A6741)';},1200);
+}
+</script>
+</body>
+</html>
